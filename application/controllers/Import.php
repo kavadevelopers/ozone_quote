@@ -38,7 +38,7 @@ class Import extends CI_Controller
 			$reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
 			$spreadsheet = $reader->load($_FILES['file']['tmp_name']);
 			$sheetData = $spreadsheet->getActiveSheet()->toArray();
-			$totalRows = count($sheetData) - 4;
+			$totalRows = count($sheetData) - 1;
 			unset($sheetData[0]);
 			
 

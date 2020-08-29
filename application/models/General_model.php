@@ -16,5 +16,10 @@ class General_model extends CI_Model
 	{
 		return $this->db->get_where('manufacturer',['id' => $id])->row_array();	
 	}
+
+	public function list_manufacturer()
+	{
+		return $this->db->get_where('manufacturer',['df' => ''])->result_array();	
+	}
 }
 ?>

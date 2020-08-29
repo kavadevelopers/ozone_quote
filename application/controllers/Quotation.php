@@ -22,6 +22,48 @@ class Quotation extends CI_Controller
 		$this->load->theme('quotation/add',$data);	
 	}
 
+    public function edit($id = false)
+    {
+        if($id){
+
+            $quotation = $this->db->get_where('quotation',['id' => $id])->row_array();
+            if($quotation){
+
+                $data['_title']         = "Edit Quotation";
+                $data['quotation']              = $this->db->get_where('quotation',['id' => $id])->row_array();
+                $data['quotation_detail']       = $this->db->order_by('id','asc')->get_where('quotation_detail',['quotation' => $data['quotation']['id']])->result_array();
+                $this->load->theme('quotation/edit',$data);  
+
+            }else{
+                redirect(base_url('quotation'));
+            }
+
+        }else{
+            redirect(base_url('quotation'));
+        }
+    }
+
+    public function delete($id = false)
+    {
+        if($id){
+
+            $quotation = $this->db->get_where('quotation',['id' => $id])->row_array();
+            if($quotation){
+
+                $this->db->where('id',$id)->delete('quotation');
+                $this->db->where('quotation',$id)->delete('quotation_detail');
+                $this->session->set_flashdata('msg', 'Quotation Deleted');
+                redirect(base_url('quotation'));
+
+            }else{
+                redirect(base_url('quotation'));
+            }
+
+        }else{
+            redirect(base_url('quotation'));
+        }
+    }
+
 	public function save()
 	{
 
@@ -56,6 +98,38 @@ class Quotation extends CI_Controller
 		$this->session->set_flashdata('msg', 'Quotation Saved');
 	    redirect(base_url('quotation'));
 	}
+
+    public function update()
+    {
+        $data = [
+            'name'      => $this->input->post('client'),
+            'date'      => dd($this->input->post('date'))
+        ];
+        $this->db->where('id',$this->input->post('id'))->update('quotation',$data);
+        $quotation = $this->input->post('id');
+
+
+        $this->db->where('quotation',$this->input->post('id'))->delete('quotation_detail');
+
+        foreach ($this->input->post('product') as $key => $value) {
+            $data = [
+                'manufacturer'      => $this->input->post('manufacturer')[$key],
+                'product'           => $this->input->post('product')[$key],
+                'price'             => $this->input->post('price')[$key],
+                'discount'          => $this->input->post('discount')[$key],
+                'margin'            => $this->input->post('margin')[$key],
+                'unit_price'        => $this->input->post('unitPrice')[$key],
+                'qty'               => $this->input->post('qty')[$key],
+                'total'             => $this->input->post('total')[$key],
+                'udate'             => dd($this->input->post('udate')[$key]),
+                'quotation'         => $quotation
+            ];  
+            $this->db->insert('quotation_detail',$data);
+        }
+
+        $this->session->set_flashdata('msg', 'Quotation Updated');
+        redirect(base_url('quotation'));
+    }
 
 	public function product_autocomplete()
 	{
@@ -244,7 +318,7 @@ class Quotation extends CI_Controller
                 $rows->quote,
                 $rows->name,
                 $rows->date,
-                '<a href="'.base_url('quotation/download/').$rows->id.'" class="btn btn-success btn-mini" title="Download" target="_blank"><i class="fa fa-download"></i></a>'
+                '<a href="'.base_url('quotation/download/').$rows->id.'" class="btn btn-success btn-mini" title="Download" target="_blank"><i class="fa fa-download"></i></a> <a href="'.base_url('quotation/edit/').$rows->id.'" class="btn btn-primary btn-mini" title="Edit" target=""><i class="fa fa-pencil"></i></a> <a href="'.base_url('quotation/delete/').$rows->id.'" class="btn btn-danger btn-mini btn-delete" title="Edit" target=""><i class="fa fa-trash"></i></a>'
             );     
         }
         $total_employees = $this->totalRows();
