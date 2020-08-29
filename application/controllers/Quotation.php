@@ -106,22 +106,29 @@ class Quotation extends CI_Controller
         $sheet->setCellValue('E1', 'Pricing');
         $sheet->setCellValue('F1', 'Qty');
         $sheet->setCellValue('G1', 'Total');
-        $sheet->setCellValue('H1', 'Product Main Class');
-        $sheet->setCellValue('I1', 'Product Sub  Clasiification');
-        $sheet->setCellValue('J1', 'Product Group');
-        $sheet->setCellValue('K1', 'HS Code');
-        $sheet->setCellValue('L1', 'Country of Origin');
-        $sheet->setCellValue('M1', 'MOQ');
-        $sheet->setCellValue('N1', 'Spike order qty');
-        $sheet->setCellValue('O1', 'Warrantee (months)');
-        $sheet->setCellValue('P1', 'Gross Weight');
-        $sheet->setCellValue('Q1', 'Net Weight');
-        $sheet->setCellValue('R1', 'Length');
-        $sheet->setCellValue('S1', 'Width');
-        $sheet->setCellValue('T1', 'Height');
-        $sheet->setCellValue('U1', 'Unit of Dimension');
-        $sheet->setCellValue('V1', 'Volume');
-        $sheet->setCellValue('W1', 'Volume Unit');
+
+        $sheet->setCellValue('H1', 'RReup');
+        $sheet->setCellValue('I1', 'Discount');
+        $sheet->setCellValue('J1', 'Buying price');
+        $sheet->setCellValue('K1', 'Total buying price');
+        $sheet->setCellValue('L1', 'Margin');
+
+        $sheet->setCellValue('M1', 'Product Main Class');
+        $sheet->setCellValue('N1', 'Product Sub  Clasiification');
+        $sheet->setCellValue('O1', 'Product Group');
+        $sheet->setCellValue('P1', 'HS Code');
+        $sheet->setCellValue('Q1', 'Country of Origin');
+        $sheet->setCellValue('R1', 'MOQ');
+        $sheet->setCellValue('S1', 'Spike order qty');
+        $sheet->setCellValue('T1', 'Warrantee (months)');
+        $sheet->setCellValue('U1', 'Gross Weight');
+        $sheet->setCellValue('V1', 'Net Weight');
+        $sheet->setCellValue('W1', 'Length');
+        $sheet->setCellValue('X1', 'Width');
+        $sheet->setCellValue('Y1', 'Height');
+        $sheet->setCellValue('Z1', 'Unit of Dimension');
+        $sheet->setCellValue('AA1', 'Volume');
+        $sheet->setCellValue('AB1', 'Volume Unit');
 
         $details = $this->db->order_by('id','asc')->get_where('quotation_detail',['quotation' => $quotation['id']])->result_array();
         $rows = 1;
@@ -135,22 +142,29 @@ class Quotation extends CI_Controller
             $sheet->setCellValue('E'.$rows, $value['unit_price']);
             $sheet->setCellValue('F'.$rows, $value['qty']);
             $sheet->setCellValue('G'.$rows, $value['total']);
-            $sheet->setCellValue('H'.$rows, $product['main_class']);
-            $sheet->setCellValue('I'.$rows, $product['sub_class']);
-            $sheet->setCellValue('J'.$rows, $product['group']);
-            $sheet->setCellValue('K'.$rows, $product['hs_code']);
-            $sheet->setCellValue('L'.$rows, $product['country']);
-            $sheet->setCellValue('M'.$rows, $product['moq']);
-            $sheet->setCellValue('N'.$rows, $product['s_or_qty']);
-            $sheet->setCellValue('O'.$rows, $product['warranty']);
-            $sheet->setCellValue('P'.$rows, $product['gross_weight']);
-            $sheet->setCellValue('Q'.$rows, $product['net_weight']);
-            $sheet->setCellValue('R'.$rows, $product['length']);
-            $sheet->setCellValue('S'.$rows, $product['width']);
-            $sheet->setCellValue('T'.$rows, $product['height']);
-            $sheet->setCellValue('U'.$rows, $product['unit_of_dimention']);
-            $sheet->setCellValue('V'.$rows, $product['volume']);
-            $sheet->setCellValue('W'.$rows, $product['volume_unit']);
+            $sheet->setCellValue('H'.$rows, $product['price']);
+            $sheet->setCellValue('I'.$rows, $value['discount']);
+            $buying_price = $product['price'] - (($product['price'] * $value['discount']) / 100);
+            $sheet->setCellValue('J'.$rows, $buying_price);
+            $sheet->setCellValue('K'.$rows, ($buying_price * $value['qty']));
+            $sheet->setCellValue('L'.$rows, $value['margin']);
+
+            $sheet->setCellValue('M'.$rows, $product['main_class']);
+            $sheet->setCellValue('N'.$rows, $product['sub_class']);
+            $sheet->setCellValue('O'.$rows, $product['group']);
+            $sheet->setCellValue('P'.$rows, $product['hs_code']);
+            $sheet->setCellValue('Q'.$rows, $product['country']);
+            $sheet->setCellValue('R'.$rows, $product['moq']);
+            $sheet->setCellValue('S'.$rows, $product['s_or_qty']);
+            $sheet->setCellValue('T'.$rows, $product['warranty']);
+            $sheet->setCellValue('U'.$rows, $product['gross_weight']);
+            $sheet->setCellValue('V'.$rows, $product['net_weight']);
+            $sheet->setCellValue('W'.$rows, $product['length']);
+            $sheet->setCellValue('X'.$rows, $product['width']);
+            $sheet->setCellValue('Y'.$rows, $product['height']);
+            $sheet->setCellValue('Z'.$rows, $product['unit_of_dimention']);
+            $sheet->setCellValue('AA'.$rows, $product['volume']);
+            $sheet->setCellValue('AB'.$rows, $product['volume_unit']);
         }
 
 
