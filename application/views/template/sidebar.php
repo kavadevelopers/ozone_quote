@@ -43,7 +43,7 @@
                     <li class="<?= menu(1,["import"])[0]; ?>">
                         <a href="<?= base_url('import') ?>">
                             <span class="pcoded-micon"><i class="fa fa-file-excel-o"></i></span>
-                            <span class="pcoded-mtext">Upload Products</span>
+                            <span class="pcoded-mtext">Import Products</span>
                         </a>
                     </li>
                 </ul>
