@@ -10,7 +10,7 @@
     <meta name="description" content="">
     <meta name="author" content="#">
     <!-- Favicon icon -->
-    <link rel="icon" href="<?= base_url() ?>asset/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="<?= base_url() ?>asset/images/favicon.png" type="image/x-icon">
     <script type="text/javascript" src="<?= base_url() ?>asset/bower_components/jquery/js/jquery.min.js"></script>
     <!-- Google font--><link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,800" rel="stylesheet">
     <!-- Required Fremwork -->
@@ -50,7 +50,7 @@
     </div>
     <!-- Pre-loader end -->
 
-    <section class="login-block" style="">
+    <section class="login-block" style="background: url(<?= base_url('asset/images/background.jpg') ?>) no-repeat; background-size:cover;">
         <!-- Container-fluid starts -->
         <div class="container">
             <div class="row">
