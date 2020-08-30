@@ -40,7 +40,7 @@
 
 <script type="text/javascript">
 	$(function(){
-		$('#dtAjax').DataTable({
+		dtTable = $('#dtAjax').DataTable({
 			"pageLength" : 10,
 			"serverSide": true,
 			"processing": true,
@@ -58,6 +58,33 @@
 			       "className": "text-center", "targets": [0,2,3]
 			    },
 		    ]
-		  });
+		});
+
+
+		
+		$(document).on('click','.btn-delete-quote', function(){
+			_this = $(this);
+			id = $(this).data('id');
+        	if(confirm('Are you sure you want to delete this?')){
+        		_this.html('<i class="fa fa-circle-o-notch fa-spin"></i>');
+        		_this.attr('disabled',true);
+        		$.ajax({
+	                type: "POST",
+	                url : "<?= base_url('quotation/delete'); ?>",
+	                data : "id="+id,
+	                cache : false,
+	                beforeSend: function() {
+	                      
+	                },
+	                success: function(out)
+	                {
+	                	_this.removeAttr('disabled');
+	                	_this.html('<i class="fa fa-trash"></i>');
+	                	PNOTY("Quotation Deleted",'success');    
+	                	dtTable.ajax.reload(); 	
+	                }
+                });
+        	}
+        });
 	})
 </script>

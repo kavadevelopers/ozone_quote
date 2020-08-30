@@ -45,23 +45,8 @@ class Quotation extends CI_Controller
 
     public function delete($id = false)
     {
-        if($id){
-
-            $quotation = $this->db->get_where('quotation',['id' => $id])->row_array();
-            if($quotation){
-
-                $this->db->where('id',$id)->delete('quotation');
-                $this->db->where('quotation',$id)->delete('quotation_detail');
-                $this->session->set_flashdata('msg', 'Quotation Deleted');
-                redirect(base_url('quotation'));
-
-            }else{
-                redirect(base_url('quotation'));
-            }
-
-        }else{
-            redirect(base_url('quotation'));
-        }
+        $this->db->where('id',$this->input->post('id'))->delete('quotation');
+        $this->db->where('quotation',$this->input->post('id'))->delete('quotation_detail');
     }
 
 	public function save()
@@ -318,7 +303,7 @@ class Quotation extends CI_Controller
                 $rows->quote,
                 $rows->name,
                 $rows->date,
-                '<a href="'.base_url('quotation/download/').$rows->id.'" class="btn btn-success btn-mini" title="Download" target="_blank"><i class="fa fa-download"></i></a> <a href="'.base_url('quotation/edit/').$rows->id.'" class="btn btn-primary btn-mini" title="Edit" target=""><i class="fa fa-pencil"></i></a> <a href="'.base_url('quotation/delete/').$rows->id.'" class="btn btn-danger btn-mini btn-delete" title="Edit" target=""><i class="fa fa-trash"></i></a>'
+                '<a href="'.base_url('quotation/download/').$rows->id.'" class="btn btn-success btn-mini" title="Download" target="_blank"><i class="fa fa-download"></i></a> <a href="'.base_url('quotation/edit/').$rows->id.'" class="btn btn-primary btn-mini" title="Edit" target=""><i class="fa fa-pencil"></i></a> <button data-id="'.$rows->id.'" class="btn btn-danger btn-mini btn-delete-quote" title="Edit" target=""><i class="fa fa-trash"></i></button>'
             );     
         }
         $total_employees = $this->totalRows();
