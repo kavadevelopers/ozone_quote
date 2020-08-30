@@ -17,7 +17,7 @@
     <meta name="keywords" content="Kava Developers">
     <meta name="author" content="Kava Developers">
     <!-- Favicon icon -->
-    <!-- <link rel="icon" href="<?= base_url() ?>asset/images/favicon.ico" type="image/x-icon"> -->
+    <link rel="icon" href="<?= base_url() ?>asset/images/favicon.png" type="image/x-icon">
     <script type="text/javascript" src="<?= base_url() ?>asset/bower_components/jquery/js/jquery.min.js"></script>
     <!-- Google font-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600" rel="stylesheet">
