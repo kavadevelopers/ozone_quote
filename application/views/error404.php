@@ -10,7 +10,7 @@
 	<title>404 Page Not Found | <?= get_setting()['name']; ?></title>
 
 	
-	<link rel="icon" href="<?= base_url() ?>asset/images/favicon.ico" type="image/x-icon">
+	<link rel="icon" href="<?= base_url() ?>asset/images/favicon.png" type="image/x-icon">
 
 	<!-- Google font -->
 	<link href="https://fonts.googleapis.com/css?family=Cabin:400,700" rel="stylesheet">
